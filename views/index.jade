@@ -1,0 +1,13 @@
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+  body
+    h1= title
+    p Welcome to #{title}
+    form(action='/chat', method='POST')
+      p Enter Username
+      input(type='text', name='username')
+      input(type='submit', id='user_submit', value='Enter')
