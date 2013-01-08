@@ -26,7 +26,8 @@ html
           });
 
           socket.on('recieve', function(data){
-          $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');  
+          $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
+          $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
           });
 
           $('#message').keypress(function(e){
@@ -37,6 +38,7 @@ html
           $('#send').click(function(){
           socket.emit('message',{'user': user, 'message': $('#message').val()});
           $('#incoming').append('<p><b>You:</b> ' + $('#message').val() + '</p>');
+          $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
           $('#message').val('');
           $('#message').focus();
           });
