@@ -10,10 +10,12 @@ var express = require('express')
   , path = require('path')
   , io = require('socket.io');
 
-var port;
+var port = process.env.PORT || 5000;
 
 var app = express()
-  , server = http.createServer(app)
+  , server = app.listen(port, function(){
+    console.log("Server listening on PORT " + port);
+  })
   , io = io.listen(server);
 
   // Heroku won't actually allow us to use WebSockets
@@ -24,8 +26,7 @@ io.configure(function () {
   io.set("polling duration", 10);
 });
 
-  server.listen((port = process.env.PORT || 5000));
-
+  //server.listen(port);
   io.sockets.on('connection', function (socket) {
   socket.emit('status', { connected: 'true' });
   socket.on('message', function (data) {
@@ -56,10 +57,8 @@ app.configure('production', function() {
 });
 
 
+//Routes
+
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/chat', routes.chat);
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + port); //+ app.get('port'));
-});
