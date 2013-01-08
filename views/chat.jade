@@ -8,6 +8,7 @@ html
   body
     h2 #{title}
     #contain
+      #users
       #incoming
       .inp
         input(type='text', id='message')
@@ -21,13 +22,19 @@ html
           //var socket = io.connect('http://0.0.0.0');
 
           socket.on('status', function (data) {
-          if(data['connected'] == 'true')
+          if(data['connected'] == 'true'){
           console.log('Connected to server');
+          $('#users').html('<h6> Number of users: ' + data['count'] + '</h6>');
+          }
           });
 
           socket.on('recieve', function(data){
           $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
           $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
+          });
+
+          socket.on('count', function(data){
+          $('#users').html('<h6> Number of users: ' + data + '</h6>');
           });
 
           $('#message').keypress(function(e){

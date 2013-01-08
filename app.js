@@ -27,13 +27,27 @@ io.configure(function () {
 });
 
   //server.listen(port);
+
+  var user_count = 0;
+
   io.sockets.on('connection', function (socket) {
-  socket.emit('status', { connected: 'true' });
+
+  socket.emit('status', { connected: 'true', count: user_count});
+  socket.broadcast.emit('count', user_count);
+  user_count += 1;
+
   socket.on('message', function (data) {
     socket.broadcast.emit('recieve', data);
     console.log(data);
   });
+
+
+  socket.on('disconnect', function () {
+    user_count -= 1;
+  });
+
 });
+
 
 app.configure(function(){
   //app.set('port', process.env.PORT || 5000);
