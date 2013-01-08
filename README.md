@@ -6,6 +6,5 @@ cd ./node-express-socket && npm install
 node app.js
 ```
 
-```
-Hosted on Heroku at http://nes-chat.herokuapp.com/
-```
+
+* Hosted on Heroku at http://nes-chat.herokuapp.com/
