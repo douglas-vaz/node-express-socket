@@ -12,6 +12,8 @@ var express = require('express')
 
 var port = process.env.PORT || 5000;
 
+console.log('PORT = ' + port);
+
 var app = express()
   , server = http.createServer(app)
   , io = io.listen(server);
