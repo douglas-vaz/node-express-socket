@@ -19,8 +19,9 @@ var app = express()
   server.listen(port);
 
   io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('baka', function (data) {
+  socket.emit('status', { connected: 'true' });
+  socket.on('message', function (data) {
+    socket.broadcast.emit('recieve', data);
     console.log(data);
   });
 });
@@ -46,7 +47,6 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/chat', routes.chat);
-//app.get('/socket.io/socket.io.js', )
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + port); //+ app.get('port'));

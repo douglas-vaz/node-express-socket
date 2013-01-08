@@ -13,8 +13,31 @@ html
         input(type='text', id='message')
         input(type='button', value='Send', id='send')
         script
+          $(document).ready(function(){
+
+          var user = '#{username}';
+
           var socket = io.connect('http://localhost');
-          socket.on('news', function (data) {
-          console.log(data);
-          socket.emit('baka', { my: 'data' });
+
+          socket.on('status', function (data) {
+          if(data['connected'] == 'true')
+          console.log('Connected to server');
+          });
+
+          socket.on('recieve', function(data){
+          $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');  
+          });
+
+          $('#message').keypress(function(e){
+          if(e.which == 13)
+          $('#send').click();
+          });
+
+          $('#send').click(function(){
+          socket.emit('message',{'user': user, 'message': $('#message').val()});
+          $('#incoming').append('<p><b>You:</b> ' + $('#message').val() + '</p>');
+          $('#message').val('');
+          $('#message').focus();
+          });
+
           });
