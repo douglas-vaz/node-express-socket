@@ -10,9 +10,7 @@ var express = require('express')
   , path = require('path')
   , io = require('socket.io');
 
-var port = process.env.PORT || 5000;
-
-console.log('PORT = ' + port);
+var port;
 
 var app = express()
   , server = http.createServer(app)
@@ -26,7 +24,7 @@ io.configure(function () {
   io.set("polling duration", 10);
 });
 
-  server.listen(port);
+  server.listen((port = process.env.PORT || 5000));
 
   io.sockets.on('connection', function (socket) {
   socket.emit('status', { connected: 'true' });
