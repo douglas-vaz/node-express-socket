@@ -21,7 +21,6 @@ html
           $('#send').attr('disabled','disabled');
 
           $('#message').keyup(function(){
-            console.log("change");
             $('#send').attr('disabled','disabled');
             var validated = true;
             if($('#message').val().length === 0) validated = false;
