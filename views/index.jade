@@ -7,7 +7,31 @@ html
   body
     h1= title
     p Welcome to #{title}
-    form(action='/chat', method='POST')
+    form(action='/chat', method='POST', id="login")
       p Enter Username
       input(type='text', name='username')
       input(type='submit', id='user_submit', value='Enter')
+    script
+      $(document).ready(function(){
+        $('input[type="submit"]').attr('disabled','disabled');
+
+        var validate = function(){
+          var validated = true;
+            if($('input[type="text"]').val().length === 0) validated = false;
+            return validated;
+        };
+
+        $('input[type="text"]').keyup(function(){
+            $('input[type="submit"]').attr('disabled','disabled');
+            if(validate()) $('input[type="submit"]').removeAttr("disabled");
+          });
+
+        $('input[type="text"]').keypress(function (e) {
+        if (e.which == 13) {
+          if(!validate()){
+            e.preventDefault();
+            return false;
+          }
+        }
+        });
+      });
