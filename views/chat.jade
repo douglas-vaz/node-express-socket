@@ -13,18 +13,17 @@ html
       .inp
         input(type='text', id='message')
         input(type='button', value='Send', id='send')
+
         script
           $(document).ready(function(){
 
           var user = '#{username}';
 
           var socket = io.connect(window.location.hostname);
-          //var socket = io.connect('http://0.0.0.0');
 
           socket.on('status', function (data) {
           if(data['connected'] == 'true'){
           console.log('Connected to server');
-          $('#users').html('<h6> Number of users: ' + data['count'] + '</h6>');
           }
           });
 
