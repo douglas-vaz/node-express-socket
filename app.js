@@ -48,7 +48,7 @@ app.configure('production', function() {
 io.configure(function () {
   io.set("transports", ["xhr-polling"]);
   io.set("polling duration", 10);
-  io.set("close timeout", 25);
+  io.set("close timeout", 10);
 });
 
   var user_count = 0;
