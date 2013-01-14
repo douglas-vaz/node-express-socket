@@ -74,6 +74,9 @@ io.configure(function () {
 
 
 //Routes
+app.post('/validate',function(req, res){
+  
+});
 app.get('/', routes.index);
 app.post('/chat', function(req, res, next){
   next();

@@ -19,3 +19,6 @@ a {
 #message {
   width: 300px;
 }
+.content {
+  padding: 15px;
+}
