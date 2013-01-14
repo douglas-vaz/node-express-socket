@@ -7,6 +7,9 @@ exports.index = function(req, res){
   res.render('index', { title: 'Node-Express-Socket.io' });
 };
 
+exports.validate = function(req, res){
+  res.render('index', { title: 'Node-Express-Socket.io', invalid: 'true'});
+};
 
 /*
  * POST chat page.

@@ -32,7 +32,8 @@ html
 
           socket.on('status', function (data) {
           if(data['connected'] == 'true'){
-          console.log('Connected to server');
+            console.log('Connected to server');
+            socket.emit('setClient',{'user':user});
           }
           });
 

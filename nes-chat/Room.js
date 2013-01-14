@@ -1,20 +1,24 @@
-var state = Object.create(null);
 var Users = [];
 
-state.clientId = '';
-state.userName = '';
-
-function addUser(user, client){
+function addUser(user){
   for(var i = 0; i < Users.length; i++){
-    if(Users[i].userName == user)
+    if(Users[i].userName == user){
       return false;
+    }
   }
 
-  state.clientId = client;
-  state.userName = user;
-
-  Users.push(state);
+  Users.push({'userName':user, 'clientId':''});
   return true;
+}
+
+function addClientId(id, user){
+  for(var i = 0; i < Users.length; i++){
+    if(Users[i].userName == user){
+      Users[i].clientId = id;
+      return true;
+    }
+  }
+  return false;
 }
 
 function removeUser(user){
@@ -27,9 +31,9 @@ function removeUser(user){
   return false;
 }
 
-function disconnectClient(client){
+function removeClient(id){
   for(var i = 0; i < Users.length; i++){
-    if(Users[i].clientId == client){
+    if(Users[i].clientId == id){
       Users.splice(i,1);
       return true;
     }
@@ -46,9 +50,15 @@ function countUsers(){
   return Users.length;
 }
 
+function listUsers(){
+  return Users;
+}
+
 //Expose
 exports.addUser = addUser;
 exports.removeUser = removeUser;
 exports.countUsers = countUsers;
-exports.disconnectClient = disconnectClient;
 exports.init = init;
+exports.listUsers = listUsers;
+exports.addClientId = addClientId;
+exports.removeClient = removeClient;

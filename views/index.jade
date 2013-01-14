@@ -14,6 +14,9 @@ html
         p Enter Username
         input(type='text', name='username')
         input(type='submit', id='user_submit', value='Enter')
+      if (typeof(invalid) !== 'undefined')
+        div(class='error')
+          p Username in use
       script
        $(document).ready(function(){
           $('input[type="submit"]').attr('disabled','disabled');

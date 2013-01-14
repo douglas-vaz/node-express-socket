@@ -6,6 +6,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
+  , Room = require('./nes-chat/Room.js')
   , io = require('socket.io');
 
 //Get PORT from enbironment or set to 5000 as default
@@ -51,14 +52,21 @@ io.configure(function () {
   io.set("close timeout", 10);
 });
 
-  var user_count = 0;
+  Room.init();
 
   io.sockets.on('connection', function (socket) {
 
-  user_count += 1;
   socket.emit('status', { connected: 'true'});
 
-  io.sockets.emit('count', user_count);
+  io.sockets.emit('count', Room.countUsers());
+
+  socket.on('setClient',function(data)
+  {
+    if(Room.addClientId(socket.id, data['user']))
+      console.log('Set ' + data['user'] + ' client ID as ' + socket.id);
+
+    console.log(Room.listUsers());
+  });
 
   socket.on('message', function (data) {
     socket.broadcast.emit('recieve', data);
@@ -66,19 +74,20 @@ io.configure(function () {
   });
 
   socket.on('disconnect', function () {
-    user_count -= 1;
-    io.sockets.emit('count', user_count);
+    if(Room.removeClient(socket.id))
+      console.log(socket.id + ' has disconnected');
+    io.sockets.emit('count', Room.countUsers());
   });
 
 });
 
 
 //Routes
-app.post('/validate',function(req, res){
-  
-});
 app.get('/', routes.index);
 app.post('/chat', function(req, res, next){
-  next();
+  if(!Room.addUser(req.body.username))
+    routes.validate(req, res);
+  else{
+    routes.chat(req, res);
+}
 });
-app.post('/chat', routes.chat);
