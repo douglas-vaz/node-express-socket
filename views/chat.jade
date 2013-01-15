@@ -22,6 +22,7 @@ html
           var last = user;
 
           var rec = function(data){
+            if(data['user'] != user){
             if(data['user'] != last){
             $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
             last = data['user'];
@@ -30,7 +31,8 @@ html
             var t = new Array(3).join('&nbsp');
             $("#incoming p:last-child").append('<br>' + t + data['message']);
           }
-          $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
+            $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
+            }
           };
 
           $('#send').attr('disabled','disabled');
