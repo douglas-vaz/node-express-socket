@@ -55,7 +55,7 @@ html
             if(data['user'] != user){
 
             if(!window_focus)
-              flashTitle("New Message from " + data['user'], 'c');
+              flashTitle(data['user'] + ": New Message ", 'c');
 
             if(data['user'] != last){
             $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
