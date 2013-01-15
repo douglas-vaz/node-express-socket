@@ -19,6 +19,20 @@ html
           $(document).ready(function(){
 
           var user = '#{username}';
+          var last = user;
+
+          var rec = function(data){
+            if(data['user'] != last){
+            $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
+            last = data['user'];
+          }
+          else{
+            var t = new Array(3).join('&nbsp');
+            $("#incoming p:last-child").append('<br>' + t + data['message']);
+          }
+          $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
+          };
+
           $('#send').attr('disabled','disabled');
 
           $('#message').keyup(function(){
@@ -39,8 +53,7 @@ html
           });
 
           socket.on('recieve', function(data){
-          $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
-          $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
+            rec(data);
           });
 
           socket.on('count', function(data){
@@ -55,8 +68,7 @@ html
           $('#send').click(function(){
           if($('#message').val() != ''){
             socket.emit('message',{'user': user, 'message': $('#message').val()});
-            $('#incoming').append('<p><b>You:</b> ' + $('#message').val() + '</p>');
-            $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
+            rec({'user':'You','message': $('#message').val()});
             $('#message').val('');
             $('#message').focus();
             $('#send').attr('disabled','disabled');

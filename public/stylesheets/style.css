@@ -7,10 +7,14 @@ a {
   color: #00B7FF;
 }
 #incoming {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 200px;
   width: 550px;
   border: 1px solid gray;
+}
+#incoming p {
+  padding-left: 5px;
+  font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 }
 #contain {
   padding: 10px;
@@ -20,6 +24,7 @@ a {
 }
 #message {
   width: 300px;
+  padding: 2px;
 }
 .content {
   padding: 15px;
