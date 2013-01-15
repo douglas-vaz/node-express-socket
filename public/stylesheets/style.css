@@ -16,6 +16,10 @@ a {
   padding-left: 5px;
   font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 }
+#incoming p b {
+  color: #441111;
+  font-weight: 900;
+}
 #contain {
   padding: 10px;
   margin: 10px;

@@ -28,7 +28,8 @@ html
             last = data['user'];
           }
           else{
-            var t = new Array(3).join('&nbsp');
+            //var t = new Array(3).join('&nbsp');
+            var t = '';
             $("#incoming p:last-child").append('<br>' + t + data['message']);
           }
             $("#incoming").scrollTop($("#incoming")[0].scrollHeight);
