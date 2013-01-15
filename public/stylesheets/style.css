@@ -19,6 +19,7 @@ a {
 #incoming p b {
   color: #441111;
   font-weight: 900;
+  text-decoration: underline;
 }
 #contain {
   padding: 10px;

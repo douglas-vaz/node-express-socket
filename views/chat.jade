@@ -21,8 +21,42 @@ html
           var user = '#{username}';
           var last = user;
 
+          //http://stackoverflow.com/questions/3381462/how-to-create-flashing-page-title-effect-like-facebook
+          (function () {
+          var original = document.title;
+          var timeout;
+
+          window.flashTitle = function (newMsg) {
+              function step() {
+                    document.title = (document.title == original) ? newMsg : original;
+                    };
+
+            clearTimeout(timeout);
+            timeout = setInterval(step, 1000);
+          };
+
+          window.cancelFlashTitle = function () {
+              clearTimeout(timeout);
+              document.title = original;
+            };
+            }());
+
+          //Test if window has focus
+          var window_focus = true;
+          $(window).focus(function() {
+            cancelFlashTitle();
+            window_focus = true;
+            })
+            .blur(function() {
+                window_focus = false;
+          });
+
           var rec = function(data){
             if(data['user'] != user){
+
+            if(!window_focus)
+              flashTitle("New Message from " + data['user'], 'c');
+
             if(data['user'] != last){
             $('#incoming').append('<p><b>' + data['user'] +':</b> ' + data['message'] + '</p>');
             last = data['user'];
