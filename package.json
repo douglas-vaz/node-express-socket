@@ -12,6 +12,7 @@
     "express": "3.x",
     "jade": "*",
     "less-middleware": "*",
-    "socket.io": "~0.9.6"
+    "socket.io": "~0.9.6",
+    "toobusy": "*"
   }
 }

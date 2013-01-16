@@ -7,7 +7,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , Room = require('./nes-chat/Room.js')
-  , io = require('socket.io');
+  , io = require('socket.io')
+  , toobusy = require('toobusy');
 
 //Get PORT from enbironment or set to 5000 as default
 var port = process.env.PORT || 5000;
@@ -22,6 +23,15 @@ var app = express()
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+
+  //Toobusy middleware
+  app.use(function(req, res, next) {
+  // check if we're toobusy() - note, this call is extremely fast, and returns
+  // state that is cached at a fixed interval
+  if (toobusy()) res.send(503, "I'm busy right now, sorry.");
+  else next();
+});
+  
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
