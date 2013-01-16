@@ -7,7 +7,7 @@ function addUser(user){
     }
   }
 
-  Users.push({'userName':user, 'clientId':''});
+  Users.push({'userName':user, 'clientId':'', 'clientIP':''});
   return true;
 }
 
@@ -15,6 +15,17 @@ function addClientId(id, user){
   for(var i = 0; i < Users.length; i++){
     if(Users[i].userName == user){
       Users[i].clientId = id;
+      return true;
+    }
+  }
+  return false;
+}
+
+function addClientIP(ip, user)
+{
+  for(var i = 0; i < Users.length; i++){
+    if(Users[i].userName == user){
+      Users[i].clientIP = ip;
       return true;
     }
   }
@@ -62,3 +73,4 @@ exports.init = init;
 exports.listUsers = listUsers;
 exports.addClientId = addClientId;
 exports.removeClient = removeClient;
+exports.addClientIP = addClientIP;
