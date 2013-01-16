@@ -50,6 +50,7 @@ io.configure(function () {
   io.set("transports", ["xhr-polling"]);
   io.set("polling duration", 10);
   io.set("close timeout", 10);
+  io.set("log level", 1);
 });
 
   Room.init();
@@ -88,6 +89,7 @@ app.post('/chat', function(req, res, next){
   if(!Room.addUser(req.body.username))
     routes.validate(req, res);
   else{
+    Room.addClientIP(req.ip, req.body.username);
     routes.chat(req, res);
 }
 });
