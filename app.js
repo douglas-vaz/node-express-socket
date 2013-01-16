@@ -63,9 +63,7 @@ io.configure(function () {
 
   socket.on('setClient',function(data)
   {
-    if(Room.addClientId(socket.id, data['user']))
-      console.log('Set ' + data['user'] + ' client ID as ' + socket.id);
-
+    Room.addClientId(socket.id, data['user'])
     console.log(Room.listUsers());
   });
 
