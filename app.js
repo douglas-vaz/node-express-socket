@@ -75,8 +75,8 @@ io.configure(function () {
   {
     Room.addClientId(socket.id, data['user']);
     //Room.addClientIP(socket.handshake.address, data['user']);
-    var endpoint = socket.manager.handshaken[socket.id].address;
-    Room.addClientIP(endpoint, data['user']);
+    //var endpoint = socket.manager.handshaken[socket.id].address;
+    //Room.addClientIP(endpoint, data['user']);
     console.log(Room.listUsers());
   });
 
@@ -100,6 +100,25 @@ app.post('/chat', function(req, res, next){
   if(!Room.addUser(req.body.username))
     routes.validate(req, res);
   else{
+  var getIp = function() {
+  var ipAddress;
+  // Amazon EC2 / Heroku workaround to get real client IP
+  var forwardedIpsStr = req.header('x-forwarded-for'); 
+  if (forwardedIpsStr) {
+    // 'x-forwarded-for' header may return multiple IP addresses in
+    // the format: "client IP, proxy 1 IP, proxy 2 IP" so take the
+    // the first one
+    var forwardedIps = forwardedIpsStr.split(',');
+    ipAddress = forwardedIps[0];
+  }
+  if (!ipAddress) {
+    // Ensure getting client IP address still works in
+    // development environment
+    ipAddress = req.connection.remoteAddress;
+  }
+  return ipAddress;
+};
+    Room.addClientIP(getIp(), req.body.username);
     routes.chat(req, res);
 }
 });
