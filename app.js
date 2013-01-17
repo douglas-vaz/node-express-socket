@@ -97,7 +97,7 @@ app.post('/chat', function(req, res, next){
   if(!Room.addUser(req.body.username))
     routes.validate(req, res);
   else{
-    Room.addClientIP(req.ip, req.body.username);
+    Room.addClientIP(req.connection.remoteAddress, req.body.username);
     routes.chat(req, res);
 }
 });
