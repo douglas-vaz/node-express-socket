@@ -101,3 +101,7 @@ app.post('/chat', function(req, res, next){
     routes.chat(req, res);
 }
 });
+app.get('/users',function(req, res, next)
+  {
+    routes.users(req, res, Room.listUsers());
+  });

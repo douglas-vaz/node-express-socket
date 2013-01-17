@@ -18,3 +18,7 @@ exports.validate = function(req, res){
 exports.chat = function(req, res){
   res.render('chat', { username: req.body.username, title: 'Chat - '+req.body.username });
 };
+
+exports.users = function(req, res, users){
+	res.render('users', {'users': users});
+};
