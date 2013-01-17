@@ -73,7 +73,8 @@ io.configure(function () {
 
   socket.on('setClient',function(data)
   {
-    Room.addClientId(socket.id, data['user'])
+    Room.addClientId(socket.id, data['user']);
+    Room.addClientIP(socket.handshake.address, data['user']);
     console.log(Room.listUsers());
   });
 
@@ -97,7 +98,7 @@ app.post('/chat', function(req, res, next){
   if(!Room.addUser(req.body.username))
     routes.validate(req, res);
   else{
-    Room.addClientIP(req.connection.remoteAddress, req.body.username);
+    //Room.addClientIP(req.connection.remoteAddress, req.body.username);
     routes.chat(req, res);
 }
 });
